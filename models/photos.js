@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-const photoModel = new mongooseSchema(
+const photoModel = new mongoose.Schema(
   {
-    name: { type: String },
+    images: [String],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

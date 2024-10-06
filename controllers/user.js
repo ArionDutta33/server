@@ -14,17 +14,17 @@ mongoose
   });
 
 export const regsiterUser = asyncHandler(async (req, res) => {
-  let { profilePic } = req.file ? req.file.path : null;
+  let profilePic = req.file ? req.file.path : null;
+  console.log(req.file);
   const { email, name, password } = req.body;
   if (!email || !name || !password) {
     res
       .status(400)
       .json({ success: false, message: "All fields are required" });
   }
-  if (!profilePic) {
-    profilePic =
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-  }
+  const userProfilePic =
+    profilePic ||
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   const userExists = await User.findOne({ email: email });
   if (userExists) {
     res.status(400).json({ success: false, message: "User already exists" });
@@ -35,7 +35,7 @@ export const regsiterUser = asyncHandler(async (req, res) => {
     name: name,
     email,
     password: hashedPassword,
-    profilePic,
+    profilePic: userProfilePic,
   });
   await user.save();
   res
