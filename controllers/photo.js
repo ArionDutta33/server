@@ -33,6 +33,6 @@ export const getAllPhotos = asyncHandler(async (req, res) => {
   return res.status(201).json({
     success: true,
     message: "Photos fetched successfully",
-    data: photos,
+    photos,
   });
 });
